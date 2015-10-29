@@ -232,6 +232,7 @@
         var _ = this;
         if (_.options.slidesToShow === 1 && _.options.adaptiveHeight === true && _.options.vertical === false) {
             var targetHeight = _.$slides.eq(_.currentSlide).outerHeight(true);
+            _.$list.stop(true, false);
             _.$list.animate({
                 height: targetHeight
             }, _.options.speed);
@@ -249,6 +250,7 @@
             targetLeft = -targetLeft;
         }
         if (_.transformsEnabled === false) {
+            _.$slideTrack.stop(true, false);
             if (_.options.vertical === false) {
                 _.$slideTrack.animate({
                     left: targetLeft
@@ -265,9 +267,9 @@
                 if (_.options.rtl === true) {
                     _.currentLeft = -(_.currentLeft);
                 }
-                $({
-                    animStart: _.currentLeft
-                }).animate({
+                var sel = $({animStart: _.currentLeft});
+                sel.stop(true, false);
+                sel.animate({
                     animStart: targetLeft
                 }, {
                     duration: _.options.speed,
@@ -910,7 +912,9 @@
                 zIndex: _.options.zIndex
             });
 
-            _.$slides.eq(slideIndex).animate({
+            var slides = _.$slides.eq(slideIndex);
+            slides.stop(true, false);
+            slides.animate({
                 opacity: 1
             }, _.options.speed, _.options.easing, callback);
 
@@ -942,7 +946,9 @@
 
         if (_.cssTransitions === false) {
 
-            _.$slides.eq(slideIndex).animate({
+            var slides = _.$slides.eq(slideIndex);
+            slides.stop(true, false);
+            slides.animate({
                 opacity: 0,
                 zIndex: _.options.zIndex - 2
             }, _.options.speed, _.options.easing);
@@ -1338,7 +1344,8 @@
                     imageSource = $(this).attr('data-lazy'),
                     imageToLoad = document.createElement('img');
 
-                imageToLoad.onload = function() {
+                imageToLoad.onload = function () {
+                    image.stop(true, false);
                     image
                         .animate({ opacity: 0 }, 100, function() {
                             image
