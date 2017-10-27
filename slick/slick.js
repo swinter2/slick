@@ -1203,6 +1203,7 @@
             _.initADA();
         }
 
+        _.$slider.trigger('afterInit', [_]);
     };
 
     Slick.prototype.initArrowEvents = function() {
